@@ -10,8 +10,9 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
-@Table(name = "usuario", schema = "financas")//Test if I can remove the schema property
+@Table(name = "usuario", schema = "financas")//If I remove the schema property, the application can may get lost.
 public class Usuario {
     //this package 'domain' could also be named as model, entities or even bean
 
