@@ -29,6 +29,10 @@ class UsuarioRepositoryTest {
 
     @BeforeEach
     void setUp() {
+
+        //Example if I want to load pre-configured data. Useful when the annotation @DataJpaTest is in use.
+        //Bootstrap bootstrap = new Bootstrap(dependency1, dependency2, dependencyN);
+        //bootstrap.run(); //load data
     }
 
     @Test

@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "usuario", schema = "financas")//If I remove the schema property, the application can may get lost.
+@Table(name = "usuario", schema = "financas")//If I remove the schema property, the application may get lost.
 public class Usuario {
     //this package 'domain' could also be named as model, entities or even bean
 
