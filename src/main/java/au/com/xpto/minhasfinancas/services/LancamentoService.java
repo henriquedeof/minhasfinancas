@@ -3,6 +3,7 @@ package au.com.xpto.minhasfinancas.services;
 import au.com.xpto.minhasfinancas.domain.entities.Lancamento;
 import au.com.xpto.minhasfinancas.domain.enums.StatusLancamento;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,4 +22,7 @@ public interface LancamentoService {
     void validarLancamento(Lancamento lancamento);
 
     Optional<Lancamento> lancamentoPorId(Long id);
+
+    BigDecimal obterSaldoPorUsuario(Long id);
+
 }

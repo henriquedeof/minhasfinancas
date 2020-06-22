@@ -2,6 +2,7 @@ package au.com.xpto.minhasfinancas.services.impl;
 
 import au.com.xpto.minhasfinancas.domain.entities.Lancamento;
 import au.com.xpto.minhasfinancas.domain.enums.StatusLancamento;
+import au.com.xpto.minhasfinancas.domain.enums.TipoLancamento;
 import au.com.xpto.minhasfinancas.exceptions.RegraDeNegocioException;
 import au.com.xpto.minhasfinancas.repositories.LancamentoRepository;
 import au.com.xpto.minhasfinancas.services.LancamentoService;
@@ -57,6 +58,7 @@ public class LancamentoServiceImpl implements LancamentoService {
     }
 
     @Override
+    @Transactional(readOnly = true)//Allows optimizations at runtime.
     public List<Lancamento> listarLancamentos(Lancamento lancamentoFiltro) {
         //Using "Query By Example" that is provided by Spring Data to create filters for this search.
 
@@ -106,6 +108,18 @@ public class LancamentoServiceImpl implements LancamentoService {
     public Optional<Lancamento> lancamentoPorId(Long id) {
         //I should implement NOT FOUND here.
         return this.lancamentoRepository.findById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)//Allows optimizations at runtime.
+    public BigDecimal obterSaldoPorUsuario(Long id) {
+        BigDecimal receitas = this.lancamentoRepository.obterSaldoPorTipoLancamentoEUsuarioEStatus(id, TipoLancamento.RECEITA);
+        BigDecimal despesas = this.lancamentoRepository.obterSaldoPorTipoLancamentoEUsuarioEStatus(id, TipoLancamento.DESPESA);
+
+        receitas = receitas == null ? BigDecimal.ZERO : receitas;
+        despesas = despesas == null ? BigDecimal.ZERO : despesas;
+
+        return receitas.subtract(despesas);
     }
 
 }

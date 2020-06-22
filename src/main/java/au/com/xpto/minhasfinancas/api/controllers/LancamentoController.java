@@ -1,5 +1,6 @@
 package au.com.xpto.minhasfinancas.api.controllers;
 
+import au.com.xpto.minhasfinancas.api.dto.AtualizaStatusDTO;
 import au.com.xpto.minhasfinancas.api.dto.LancamentoDTO;
 import au.com.xpto.minhasfinancas.domain.entities.Lancamento;
 import au.com.xpto.minhasfinancas.domain.entities.Usuario;
@@ -62,7 +63,7 @@ public class LancamentoController {
 
     @PutMapping("/{id}")
     public ResponseEntity atualizar(@PathVariable Long id, @RequestBody LancamentoDTO lancamentoDTO){
-        return this.usuarioService.usuarioPorId(id).map(entity -> {
+        return this.lancamentoService.lancamentoPorId(id).map(entity -> {
             try{
 
                 Lancamento lancamento = this.converter(lancamentoDTO);
@@ -74,6 +75,27 @@ public class LancamentoController {
                 return ResponseEntity.badRequest().body(e.getMessage());
             }
         }).orElseGet(() -> new ResponseEntity("Lancamento nao encontrado na base de dados.", HttpStatus.BAD_REQUEST));//Poderia ser NOT_FOUND
+    }
+
+    @PutMapping("{id}/atualiza-status")
+    public ResponseEntity atualizarStatus( @PathVariable Long id, @RequestBody AtualizaStatusDTO dto ) {
+        return lancamentoService.lancamentoPorId(id).map( entity -> {
+            StatusLancamento statusSelecionado = StatusLancamento.valueOf(dto.getStatus());
+
+            if(statusSelecionado == null) {
+                return ResponseEntity.badRequest().body("Nao foi possivel atualizar o status do lancamento, envie um status valido.");
+            }
+
+            try {
+                entity.setStatus(statusSelecionado);
+                lancamentoService.atualizarLancamento(entity);
+                return ResponseEntity.ok(entity);
+            }catch (RegraDeNegocioException e) {
+                return ResponseEntity.badRequest().body(e.getMessage());
+            }
+
+        }).orElseGet( () ->
+                new ResponseEntity("Lancamento nao encontrado na base de Dados.", HttpStatus.BAD_REQUEST) );
     }
 
     @DeleteMapping("/{id}")
@@ -96,6 +118,8 @@ public class LancamentoController {
             @RequestParam(value = "ano", required = false) Integer ano,
             @RequestParam("usuario") Long idUsuario //idUsuario is mandatory
         ){
+
+        //I still do not have filter for tipo, so, my search will bring all kinds of tipo.
 
         Lancamento lancamentoFiltro = new Lancamento();
         lancamentoFiltro.setDescricao(descricao);
