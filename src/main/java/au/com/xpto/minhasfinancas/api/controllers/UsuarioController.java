@@ -17,6 +17,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class UsuarioController {
     //I created this class as usuarioController but it also would be usuarioResource
 
+    /*
+     John's course applies MapStruct to map domain classes into DTO classes and vice versa. A good example of its use is:
+
+    org.mapstruct.@Mapper
+    public interface VendorMapper {
+        VendorMapper INSTANCE = org.mapstruct.factory.Mappers.getMapper(VendorMapper.class);//Using MapStruct
+        VendorDTO vendorToVendorDTO(Vendor vendor);
+        Vendor vendorDtoToVendor(VendorDTO vendorDTO);
+    }
+    */
+
     private UsuarioService service;
 
     public UsuarioController(UsuarioService service) {
@@ -34,12 +45,20 @@ public class UsuarioController {
         }
     }
 
+    /*
+    The methods on this class are executing too much business logic. This business logic should be implemented on the Service class (UsuarioService) not on Controllers.
+    For example, there are try/catch being implemented to evaluate.
+    Additionally, probably I need to create Custom Exceptions using the annotation @ControllerAdvice. Here follow some example:
+        https://mkyong.com/spring-boot/spring-rest-error-handling-example/
+        https://howtodoinjava.com/spring-restful/exception-handling-example/
+        https://spring.io/guides/tutorials/bookmarks/
+    */
+
     @PostMapping
     public ResponseEntity salvar(@RequestBody UsuarioDTO usuarioDTO){
 
         /*
-        The commented code below 'apparently' is the best way of using Controller methods. Note that the signature of the method returns a DTO object, not a ResponseEntity.
-
+        John's example below
         @ResponseStatus(HttpStatus.OK)
         public CategoryDTO getCategoryByName(@PathVariable String name){
         */

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class UsuarioDTO {
+    //In Jonh's course ID was not exposed
 
     private String email;
     private String nome;
