@@ -38,6 +38,17 @@ class UsuarioServiceTest {
     - The two lines below are used to test Controllers, regarding HTTP Status, Models, Views, Redirects, etc.
     private org.springframework.test.web.servlet.MockMvc mockMvc;
     mockMvc = MockMvcBuilders.standaloneSetup(myController).build(); -> This line is normally used on setUp() method
+
+
+    ============================= @Spy example =============================
+
+    @SpyBean private UsuarioService usuarioService;
+    @MockBean private UsuarioRepository usuarioRepository;
+
+    - There is no need to use MockitoAnnotations.initMocks(this), however, I need to annotate the class with @ExtendWith(MockitoExtension.class).
+    - Also, I do not need to create a Controller Injection.
+
+
     */
 
     //===================================================================================
@@ -49,7 +60,7 @@ class UsuarioServiceTest {
 
      public static final String EMAIL = "email@email.com";
      public static final String SENHA = "senha";
-     public static final String NOME = "senha";
+     public static final String NOME = "nome";
      public static final Long ID = 1L;
      private final Usuario usuario = Usuario.builder().email(EMAIL).senha(SENHA).id(ID).nome(NOME).build();
 
@@ -62,7 +73,7 @@ class UsuarioServiceTest {
         //Another way to create mock is using Mockito.mock(UsuarioRepository.class) instead of MockitoAnnotations.initMocks().
         // In this way, I do not need to annotate the attribute usuarioRepository with @Mock
 
-        //Finally, I also could use the annotation @MockBean on usuarioRepository attribute along with @ExtendWith(SpringExtension.class) or @ExtendWith(MockitoExtension.class).
+        //Finally, I also could use the annotation @MockBean on usuarioRepository attribute along with @ExtendWith(SpringExtension.class) @ExtendWith(MockitoExtension.class).
         //This way I can also inject the dependencies using Constructor
 
         //SPY NOTE: I can add my usuarioService as a spy by using the way below.
@@ -111,7 +122,7 @@ class UsuarioServiceTest {
     void salvarUsuario() {
         /*
         This is a special case. The method salvarUsuario() validates an email through validarEmail() before saving an Usuario.
-        However, I need to mock this method because I do not need to execute it only the save() method. But the method validarEmail() is implemented on my UsuarioServiceImpl (not mocked)
+        However, I need to mock this method because I do not need to execute it, only the save() method. But the method validarEmail() is implemented on my UsuarioServiceImpl (not mocked)
         Therefore, I can use the annotation @Spy as UsuarioServiceImpl will not be totally mocked, only the methods that I need. The rest will work normally.
         */
 

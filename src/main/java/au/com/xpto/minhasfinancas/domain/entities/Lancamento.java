@@ -6,11 +6,12 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
 @ToString
+@Builder
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,7 +34,7 @@ public class Lancamento {
     private BigDecimal valor;
 
     //@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
-    private LocalTime dataCadastro;//Java 8
+    private LocalDate dataCadastro;//Java 8
 
     @Enumerated(value = EnumType.STRING) //Using EnumType.ORDINAL means that it would return the index of the requested value. For example: RECEITA returns 1, DESPESA returns 0.
     private TipoLancamento tipo;

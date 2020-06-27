@@ -106,7 +106,7 @@ public class LancamentoServiceImpl implements LancamentoService {
 
     @Override
     public Optional<Lancamento> lancamentoPorId(Long id) {
-        //I should implement NOT FOUND here.
+        //I should implement NOT FOUND here, not on top or down layers.
         return this.lancamentoRepository.findById(id);
     }
 
