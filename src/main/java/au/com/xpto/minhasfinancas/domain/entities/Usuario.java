@@ -1,5 +1,6 @@
 package au.com.xpto.minhasfinancas.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,6 +28,7 @@ public class Usuario {
     private String email;
 
     @Column(name = "senha")
+    @JsonIgnore //this property will not be shown on the answer
     private String senha;
 
 }

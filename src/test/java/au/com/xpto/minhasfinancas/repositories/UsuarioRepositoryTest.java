@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest     //This annotation will bring the whole context up based on the Spring Boot configuration.
  */
 @DataJpaTest    //Annotation for a JPA test that focuses ONLY on JPA components. Transactional command is applied on this annotation.
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)  //It will not replace my configs (application-test.properties) for a default config
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) //It will not replace my configs (application-test.properties) for a default config. Specific for Repository tests.
 @ActiveProfiles("test") //Used for tests. If I do not use Spring Profile (application.properties) I need to use this configuration.
 class UsuarioRepositoryTest {
 
