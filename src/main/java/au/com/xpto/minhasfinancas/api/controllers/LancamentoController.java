@@ -41,8 +41,9 @@ public class LancamentoController {
     /*
     The methods on this class are executing too much business logic. This business logic should be implemented on the Service class (UsuarioService) not on Controllers.
     For example, there are try/catch being implemented to evaluate.
-    Additionally, probably I need to create Custom Exceptions using the annotation @ControllerAdvice. Here follow some example:
+    Additionally, probably I need to create Custom Exceptions using the annotation @ControllerAdvice. Here follows some example:
         https://mkyong.com/spring-boot/spring-rest-error-handling-example/
+        https://www.baeldung.com/exception-handling-for-rest-with-spring
         https://howtodoinjava.com/spring-restful/exception-handling-example/
         https://spring.io/guides/tutorials/bookmarks/
     */
@@ -59,6 +60,13 @@ public class LancamentoController {
         }catch (RegraDeNegocioException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity obterLancamentoPorId(@PathVariable Long id){
+        return this.lancamentoService.lancamentoPorId(id)
+                .map(lancamento -> new ResponseEntity(this.converter(lancamento), HttpStatus.OK))
+                 .orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping("/{id}")

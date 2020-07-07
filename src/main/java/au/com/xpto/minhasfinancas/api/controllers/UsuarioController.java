@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+//@CrossOrigin(methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST})
+//@CrossOrigin
 @RestController
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
@@ -44,6 +46,8 @@ public class UsuarioController {
             Usuario usuario = this.service.autenticar(usuarioDTO.getEmail(), usuarioDTO.getSenha());
             return ResponseEntity.ok(usuario);
         }catch (ErroAutenticacaoException e){
+            //I could use:
+            //throw new ResponseStatusException(HttpStatus.NOT_FOUND/HttpStatus.BAD_REQUEST, "e.getMessage()", e);
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -53,6 +57,7 @@ public class UsuarioController {
     For example, there are try/catch being implemented to evaluate.
     Additionally, probably I need to create Custom Exceptions using the annotation @ControllerAdvice. Here follow some example:
         https://mkyong.com/spring-boot/spring-rest-error-handling-example/
+        https://www.baeldung.com/exception-handling-for-rest-with-spring
         https://howtodoinjava.com/spring-restful/exception-handling-example/
         https://spring.io/guides/tutorials/bookmarks/
     */
