@@ -44,6 +44,7 @@ public class LancamentoController {
     Additionally, probably I need to create Custom Exceptions using the annotation @ControllerAdvice. Here follows some example:
         https://mkyong.com/spring-boot/spring-rest-error-handling-example/
         https://www.baeldung.com/exception-handling-for-rest-with-spring
+        https://www.baeldung.com/spring-response-status-exception
         https://howtodoinjava.com/spring-restful/exception-handling-example/
         https://spring.io/guides/tutorials/bookmarks/
     */
